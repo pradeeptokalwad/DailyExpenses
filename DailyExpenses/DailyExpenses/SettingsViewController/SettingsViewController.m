@@ -155,6 +155,9 @@
     [[UIApplication sharedApplication] scheduleLocalNotification:localNotification];
 }
 
+-(void) dailyReminder {
+    self.txtDailyReminderTime.text = [[ SharedInterface fetchDateformatter:@"hh a"] stringFromDate:datePickerForDailyReminder.date];
+}
 
 /*
  * add monthly notifications on selected date.
