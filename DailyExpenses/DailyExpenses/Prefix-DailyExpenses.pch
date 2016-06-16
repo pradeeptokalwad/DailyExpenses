@@ -1,0 +1,19 @@
+
+//
+//  Prefix-DailyExpenses.pch
+//  DailyExpenses
+//
+//  Created by Pradeep on 16/06/16.
+//  Copyright © 2016 Pradeep. All rights reserved.
+//
+
+#ifndef Prefix_DailyExpenses_pch
+#define Prefix_DailyExpenses_pch
+
+// Include any system framework and library headers here that should be included in all compilation units.
+// You will also need to set the Prefix Header build setting of one or more of your targets to reference this file.
+#import <UIKit/UIKit.h>
+#import "ExpenseModel.h"
+#import "SharedInterface.h"
+
+#endif /* Prefix_DailyExpenses_pch */

@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="9059" systemVersion="15B42" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" initialViewController="I0k-qs-wEp">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="9059" systemVersion="15B42" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" initialViewController="257-xz-LGO">
     <dependencies>
         <deployment identifier="iOS"/>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="9049"/>
@@ -79,7 +79,7 @@
                                                 <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                                                 <nil key="highlightedColor"/>
                                             </label>
-                                            <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="line" placeholder="Expense title" textAlignment="center" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="vsj-cn-PcV">
+                                            <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" placeholder="Expense title" textAlignment="center" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="vsj-cn-PcV">
                                                 <rect key="frame" x="40" y="41" width="240" height="30"/>
                                                 <animations/>
                                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
@@ -100,7 +100,7 @@
                                                 <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                                                 <nil key="highlightedColor"/>
                                             </label>
-                                            <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="line" placeholder="5000" textAlignment="center" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="1U5-JB-UQa">
+                                            <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" placeholder="5000" textAlignment="center" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="1U5-JB-UQa">
                                                 <rect key="frame" x="40" y="123" width="240" height="30"/>
                                                 <animations/>
                                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
@@ -120,6 +120,9 @@
                                                 <state key="normal" title="Submit">
                                                     <color key="titleColor" white="0.0" alpha="1" colorSpace="calibratedWhite"/>
                                                 </state>
+                                                <connections>
+                                                    <action selector="btnSubmitPressed:" destination="BYZ-38-t0r" eventType="touchUpInside" id="E0q-Ej-rn6"/>
+                                                </connections>
                                             </button>
                                         </subviews>
                                         <animations/>
@@ -187,15 +190,123 @@
                     <tabBarItem key="tabBarItem" title="Add Entry" image="tab-bar-add-entry" id="sFw-pi-3wg"/>
                     <navigationItem key="navigationItem" id="ZVQ-pC-c27"/>
                     <simulatedTabBarMetrics key="simulatedBottomBarMetrics"/>
+                    <connections>
+                        <outlet property="btnSubmit" destination="pG4-EE-3dK" id="H2b-AI-lSs"/>
+                        <outlet property="datePicker" destination="ufF-1w-zgZ" id="KRg-dT-FJ3"/>
+                        <outlet property="lblAvailableFunds" destination="6QM-88-UTq" id="OAa-pq-9kc"/>
+                        <outlet property="txtExpenseAmount" destination="1U5-JB-UQa" id="UV7-Nq-E0M"/>
+                        <outlet property="txtExpenseTitle" destination="vsj-cn-PcV" id="AG9-cD-SI9"/>
+                    </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="dkx-z0-nzr" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="1755" y="156"/>
         </scene>
-        <!--Tab Bar Controller-->
+        <!--SetupPasswordViewController-->
+        <scene sceneID="P41-xe-pVy">
+            <objects>
+                <viewController storyboardIdentifier="SetupPasswordViewController" id="257-xz-LGO" userLabel="SetupPasswordViewController" customClass="SetupPasswordViewController" sceneMemberID="viewController">
+                    <layoutGuides>
+                        <viewControllerLayoutGuide type="top" id="2dI-zS-LyK"/>
+                        <viewControllerLayoutGuide type="bottom" id="49h-CY-p4j"/>
+                    </layoutGuides>
+                    <view key="view" contentMode="scaleToFill" id="9Ql-Ps-ZiE">
+                        <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <scrollView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="NHp-nQ-m5V" customClass="TPKeyboardAvoidingScrollView">
+                                <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
+                                <subviews>
+                                    <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="7Sl-TL-bF8">
+                                        <rect key="frame" x="40" y="207" width="240" height="153"/>
+                                        <subviews>
+                                            <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" placeholder="Please enter password" textAlignment="center" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="EsA-d5-JOu">
+                                                <rect key="frame" x="20" y="20" width="200" height="30"/>
+                                                <animations/>
+                                                <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
+                                                <constraints>
+                                                    <constraint firstAttribute="width" secondItem="EsA-d5-JOu" secondAttribute="height" multiplier="20:3" id="Zto-NS-q6H"/>
+                                                </constraints>
+                                                <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                                                <textInputTraits key="textInputTraits"/>
+                                            </textField>
+                                            <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" placeholder="please confirm password" textAlignment="center" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="fYe-DO-qv7">
+                                                <rect key="frame" x="20" y="61" width="200" height="30"/>
+                                                <animations/>
+                                                <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
+                                                <constraints>
+                                                    <constraint firstAttribute="width" secondItem="fYe-DO-qv7" secondAttribute="height" multiplier="20:3" id="mvG-an-A8g"/>
+                                                </constraints>
+                                                <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                                                <textInputTraits key="textInputTraits"/>
+                                            </textField>
+                                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="pA9-7S-Ai0">
+                                                <rect key="frame" x="40" y="103" width="160" height="30"/>
+                                                <animations/>
+                                                <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                                <constraints>
+                                                    <constraint firstAttribute="width" secondItem="pA9-7S-Ai0" secondAttribute="height" multiplier="16:3" id="7Nk-0m-raX"/>
+                                                </constraints>
+                                                <state key="normal" title="Setup Password">
+                                                    <color key="titleColor" white="0.0" alpha="1" colorSpace="calibratedWhite"/>
+                                                </state>
+                                                <connections>
+                                                    <action selector="btnSetupPasswordTapped:" destination="257-xz-LGO" eventType="touchUpInside" id="0Dj-gn-TTs"/>
+                                                    <action selector="btnUpdateSettingsPressed:" destination="2ip-Id-rbp" eventType="touchUpInside" id="vWL-wx-dhO"/>
+                                                </connections>
+                                            </button>
+                                        </subviews>
+                                        <animations/>
+                                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                        <constraints>
+                                            <constraint firstItem="pA9-7S-Ai0" firstAttribute="top" secondItem="fYe-DO-qv7" secondAttribute="bottom" constant="12" id="35U-7M-Y64"/>
+                                            <constraint firstAttribute="trailing" secondItem="EsA-d5-JOu" secondAttribute="trailing" constant="20" id="DGk-3a-Trr"/>
+                                            <constraint firstAttribute="bottom" secondItem="pA9-7S-Ai0" secondAttribute="bottom" constant="20" id="Fep-3b-e6d"/>
+                                            <constraint firstItem="EsA-d5-JOu" firstAttribute="top" secondItem="7Sl-TL-bF8" secondAttribute="top" constant="20" id="Kfn-xF-65y"/>
+                                            <constraint firstItem="fYe-DO-qv7" firstAttribute="leading" secondItem="7Sl-TL-bF8" secondAttribute="leading" constant="20" id="UAf-Op-fJk"/>
+                                            <constraint firstItem="pA9-7S-Ai0" firstAttribute="leading" secondItem="7Sl-TL-bF8" secondAttribute="leading" constant="40" id="V7L-hC-b2e"/>
+                                            <constraint firstItem="fYe-DO-qv7" firstAttribute="top" secondItem="EsA-d5-JOu" secondAttribute="bottom" constant="11" id="Wzt-Qx-MGz"/>
+                                            <constraint firstAttribute="trailing" secondItem="pA9-7S-Ai0" secondAttribute="trailing" constant="40" id="b8n-QB-T6N"/>
+                                            <constraint firstItem="EsA-d5-JOu" firstAttribute="leading" secondItem="7Sl-TL-bF8" secondAttribute="leading" constant="20" id="gIs-Qt-i6B"/>
+                                            <constraint firstAttribute="trailing" secondItem="fYe-DO-qv7" secondAttribute="trailing" constant="20" id="pKP-0l-kSB"/>
+                                            <constraint firstAttribute="width" secondItem="7Sl-TL-bF8" secondAttribute="height" multiplier="80:51" id="uxj-cm-K5s"/>
+                                        </constraints>
+                                    </view>
+                                </subviews>
+                                <animations/>
+                                <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                <constraints>
+                                    <constraint firstItem="7Sl-TL-bF8" firstAttribute="centerX" secondItem="NHp-nQ-m5V" secondAttribute="centerX" id="2ZF-lz-T5d"/>
+                                    <constraint firstAttribute="bottom" secondItem="7Sl-TL-bF8" secondAttribute="bottom" constant="208" id="ObM-jn-FsK"/>
+                                    <constraint firstItem="7Sl-TL-bF8" firstAttribute="centerY" secondItem="NHp-nQ-m5V" secondAttribute="centerY" id="PBx-5f-gcF"/>
+                                    <constraint firstAttribute="trailing" secondItem="7Sl-TL-bF8" secondAttribute="trailing" constant="40" id="QmG-Wz-fq0"/>
+                                </constraints>
+                            </scrollView>
+                        </subviews>
+                        <animations/>
+                        <color key="backgroundColor" red="0.90980392160000001" green="0.43529411759999997" blue="0.15686274510000001" alpha="1" colorSpace="calibratedRGB"/>
+                        <constraints>
+                            <constraint firstItem="NHp-nQ-m5V" firstAttribute="bottom" secondItem="49h-CY-p4j" secondAttribute="top" id="Wpp-KX-E2h"/>
+                            <constraint firstItem="NHp-nQ-m5V" firstAttribute="top" secondItem="9Ql-Ps-ZiE" secondAttribute="top" id="e6B-qB-rE3"/>
+                            <constraint firstAttribute="trailing" secondItem="NHp-nQ-m5V" secondAttribute="trailing" id="f8u-NB-tix"/>
+                            <constraint firstItem="NHp-nQ-m5V" firstAttribute="leading" secondItem="9Ql-Ps-ZiE" secondAttribute="leading" id="ujT-Cg-kM2"/>
+                        </constraints>
+                    </view>
+                    <simulatedScreenMetrics key="simulatedDestinationMetrics" type="retina4"/>
+                    <connections>
+                        <outlet property="btnSetupPassword" destination="pA9-7S-Ai0" id="pxG-3X-Zep"/>
+                        <outlet property="txtConfirmPassword" destination="fYe-DO-qv7" id="sJz-Ov-Rug"/>
+                        <outlet property="txtPassword" destination="EsA-d5-JOu" id="yuJ-Nz-KaE"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="BAv-SP-ylw" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="539" y="1011"/>
+        </scene>
+        <!--View Controller-->
         <scene sceneID="Zvr-yZ-CfX">
             <objects>
-                <tabBarController automaticallyAdjustsScrollViewInsets="NO" id="I0k-qs-wEp" sceneMemberID="viewController">
+                <tabBarController storyboardIdentifier="ViewController" automaticallyAdjustsScrollViewInsets="NO" id="I0k-qs-wEp" customClass="ViewController" sceneMemberID="viewController">
                     <toolbarItems/>
                     <simulatedScreenMetrics key="simulatedDestinationMetrics" type="retina4"/>
                     <tabBar key="tabBar" contentMode="scaleToFill" id="jDv-mQ-rRW">
@@ -295,7 +406,7 @@
                                                 <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                                                 <nil key="highlightedColor"/>
                                             </label>
-                                            <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" text="1" borderStyle="line" textAlignment="center" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="rEl-Qb-hiy">
+                                            <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" text="1" textAlignment="center" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="rEl-Qb-hiy">
                                                 <rect key="frame" x="60" y="39" width="200" height="30"/>
                                                 <animations/>
                                                 <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
@@ -332,7 +443,7 @@
                                                 <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                                                 <nil key="highlightedColor"/>
                                             </label>
-                                            <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" text="9 PM" borderStyle="line" textAlignment="center" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="O28-ae-vzn">
+                                            <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" text="9 PM" textAlignment="center" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="O28-ae-vzn">
                                                 <rect key="frame" x="60" y="39" width="200" height="30"/>
                                                 <animations/>
                                                 <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
@@ -369,7 +480,7 @@
                                                 <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                                                 <nil key="highlightedColor"/>
                                             </label>
-                                            <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" text="1000" borderStyle="line" textAlignment="center" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="oH2-Ax-hgg">
+                                            <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" text="1000" textAlignment="center" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="oH2-Ax-hgg">
                                                 <rect key="frame" x="60" y="39" width="200" height="30"/>
                                                 <animations/>
                                                 <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
@@ -407,7 +518,7 @@
                                                 <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                                                 <nil key="highlightedColor"/>
                                             </label>
-                                            <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="line" placeholder="Old Password" textAlignment="center" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="DyN-sU-Lhc">
+                                            <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" placeholder="Old Password" textAlignment="center" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="DyN-sU-Lhc">
                                                 <rect key="frame" x="60" y="39" width="200" height="30"/>
                                                 <animations/>
                                                 <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
@@ -417,7 +528,7 @@
                                                 <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                                 <textInputTraits key="textInputTraits"/>
                                             </textField>
-                                            <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="line" placeholder="New Password" textAlignment="center" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="qJY-U2-7m9">
+                                            <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" placeholder="New Password" textAlignment="center" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="qJY-U2-7m9">
                                                 <rect key="frame" x="60" y="80" width="200" height="30"/>
                                                 <animations/>
                                                 <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
@@ -437,6 +548,9 @@
                                                 <state key="normal" title="Update Password">
                                                     <color key="titleColor" white="0.0" alpha="1" colorSpace="calibratedWhite"/>
                                                 </state>
+                                                <connections>
+                                                    <action selector="btnUpdateSettingsPressed:" destination="2ip-Id-rbp" eventType="touchUpInside" id="K2i-53-XrO"/>
+                                                </connections>
                                             </button>
                                         </subviews>
                                         <animations/>
@@ -498,6 +612,14 @@
                         </constraints>
                     </view>
                     <tabBarItem key="tabBarItem" title="Settings" image="tab-bar-settings" id="mIR-F8-uqr"/>
+                    <connections>
+                        <outlet property="btnUpdate" destination="YWH-mN-Fhx" id="CS1-dg-XB2"/>
+                        <outlet property="txtAvailableFund" destination="oH2-Ax-hgg" id="CmW-Tz-jbg"/>
+                        <outlet property="txtDailyReminderTime" destination="O28-ae-vzn" id="czW-t6-Kd8"/>
+                        <outlet property="txtMonthStartDate" destination="rEl-Qb-hiy" id="bZ8-H5-l87"/>
+                        <outlet property="txtNewPassword" destination="qJY-U2-7m9" id="ePh-yv-kGy"/>
+                        <outlet property="txtOldPassword" destination="DyN-sU-Lhc" id="8fp-2v-4fs"/>
+                    </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="c1R-Dz-h5X" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>

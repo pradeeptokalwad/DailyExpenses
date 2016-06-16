@@ -17,6 +17,16 @@
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions {
     // Override point for customization after application launch.
+    
+    UIUserNotificationType types = UIUserNotificationTypeBadge | UIUserNotificationTypeAlert;
+    UIUserNotificationSettings *notificationSettings = [UIUserNotificationSettings settingsForTypes:types categories:nil];
+    [[UIApplication sharedApplication] registerUserNotificationSettings:notificationSettings];
+    
+    if(![SharedInterface isStrEmpty:[SharedInterface fetchUserPassword]]){
+        UIStoryboard *storyboard = [UIStoryboard storyboardWithName:@"Main" bundle:[NSBundle mainBundle]];
+        self.window.rootViewController = [storyboard instantiateViewControllerWithIdentifier:@"ViewController"];
+    }
+
     return YES;
 }
 
@@ -40,6 +50,14 @@
 
 - (void)applicationWillTerminate:(UIApplication *)application {
     // Called when the application is about to terminate. Save data if appropriate. See also applicationDidEnterBackground:.
+}
+
+- (void)application:(UIApplication *)application didReceiveLocalNotification:(UILocalNotification *)notification
+{
+    UIApplicationState state = [application applicationState];
+    if (state == UIApplicationStateActive) {
+        [SharedInterface displayPrompt:self.window.rootViewController message:[NSString stringWithFormat:@"Local notification received %@",notification.alertBody]];
+    }
 }
 
 @end

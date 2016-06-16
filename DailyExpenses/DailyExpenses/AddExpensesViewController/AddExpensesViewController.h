@@ -9,5 +9,11 @@
 #import <UIKit/UIKit.h>
 
 @interface AddExpensesViewController : UIViewController
+@property (weak, nonatomic) IBOutlet UIDatePicker *datePicker;
+@property (weak, nonatomic) IBOutlet UITextField *txtExpenseTitle;
+@property (weak, nonatomic) IBOutlet UITextField *txtExpenseAmount;
+- (IBAction)btnSubmitPressed:(id)sender;
+@property (weak, nonatomic) IBOutlet UILabel *lblAvailableFunds;
+@property (weak, nonatomic) IBOutlet UIButton *btnSubmit;
 
 @end

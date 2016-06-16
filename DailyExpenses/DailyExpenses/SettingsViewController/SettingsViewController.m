@@ -8,14 +8,52 @@
 
 #import "SettingsViewController.h"
 
-@interface SettingsViewController ()
-
+@interface SettingsViewController ()<UIPickerViewDataSource,UIPickerViewDelegate>
+{
+    UIPickerView *pickerStartDayOfMonth;
+    NSMutableArray *aryStartDayOfMonth;
+    UIDatePicker *datePickerForDailyReminder;
+}
 @end
 
 @implementation SettingsViewController
 
 - (void)viewDidLoad {
     [super viewDidLoad];
+    aryStartDayOfMonth = [[NSMutableArray alloc] init];
+    
+    for (int i=1; i<=31; i++) {
+        [aryStartDayOfMonth addObject:[NSString stringWithFormat:@"%d",i]];
+    }
+    pickerStartDayOfMonth = [[UIPickerView alloc]init];
+    pickerStartDayOfMonth.dataSource = self;
+    pickerStartDayOfMonth.delegate = self;
+    pickerStartDayOfMonth.showsSelectionIndicator = YES;
+    UIBarButtonItem *btnDone = [[UIBarButtonItem alloc] initWithTitle:@"Done" style:UIBarButtonItemStyleDone target:self action:@selector(btnDonePressed)];
+    UIToolbar *tlbDoneBar = [[UIToolbar alloc]init];
+    [tlbDoneBar setBarStyle:UIBarStyleBlackOpaque];
+    UIBarButtonItem *flexibleItem = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemFlexibleSpace target:nil action:nil];
+
+    NSArray *toolbarItems = [NSArray arrayWithObjects:flexibleItem,btnDone, nil];
+    [tlbDoneBar setItems:toolbarItems];
+    self.txtMonthStartDate.inputView = pickerStartDayOfMonth;
+    self.txtMonthStartDate.inputAccessoryView = tlbDoneBar;
+    
+    datePickerForDailyReminder =[[UIDatePicker alloc]init];
+    datePickerForDailyReminder.datePickerMode=UIDatePickerModeTime;
+    datePickerForDailyReminder.minuteInterval = 30;
+    datePickerForDailyReminder.date=[NSDate date];
+    [datePickerForDailyReminder addTarget:self action:@selector(dailyReminder) forControlEvents:UIControlEventValueChanged];
+    self.txtDailyReminderTime.inputView = datePickerForDailyReminder;
+    self.txtDailyReminderTime.inputAccessoryView = tlbDoneBar;
+
+    [[SharedInterface sharedInstance] addBorderColorToLayer:self.txtAvailableFund];
+    [[SharedInterface sharedInstance] addBorderColorToLayer:self.txtDailyReminderTime];
+    [[SharedInterface sharedInstance] addBorderColorToLayer:self.txtMonthStartDate];
+    [[SharedInterface sharedInstance] addBorderColorToLayer:self.txtNewPassword];
+    [[SharedInterface sharedInstance] addBorderColorToLayer:self.txtOldPassword];
+    [[SharedInterface sharedInstance] addBorderColorToLayer:self.btnUpdate];
+
     // Do any additional setup after loading the view.
 }
 
@@ -24,14 +62,93 @@
     // Dispose of any resources that can be recreated.
 }
 
-/*
-#pragma mark - Navigation
+-(void) btnDonePressed {
 
-// In a storyboard-based application, you will often want to do a little preparation before navigation
-- (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
-    // Get the new view controller using [segue destinationViewController].
-    // Pass the selected object to the new view controller.
+    [self.view endEditing:YES];
 }
-*/
+
+-(void) dailyReminder {
+    self.txtDailyReminderTime.text = [[ SharedInterface fetchDateformatter:@"hh a"] stringFromDate:datePickerForDailyReminder.date];
+}
+
+- (IBAction)btnUpdateSettingsPressed:(id)sender {
+    
+    [[UIApplication sharedApplication] cancelAllLocalNotifications];
+    
+    [self dailyNotification];
+    [self monthlyNotification];
+}
+
+-(void) dailyNotification{
+    
+    NSDate *dateDailyReminder = [[SharedInterface fetchDateformatter:@"hh a"] dateFromString:self.txtDailyReminderTime.text];
+
+    NSDate *currentDate = [NSDate date];
+    NSCalendar * calendar = [NSCalendar currentCalendar];
+    [calendar setTimeZone:[NSTimeZone systemTimeZone]];
+    NSDateComponents* components = [calendar components:NSCalendarUnitMonth|NSCalendarUnitDay fromDate:currentDate];
+    NSDateComponents* componentsForDailyTime = [calendar components:NSCalendarUnitHour fromDate:dateDailyReminder];
+    [components setTimeZone:[NSTimeZone systemTimeZone]];
+    [components setHour:componentsForDailyTime.hour];
+    [components setMinute:0];
+    [components setSecond:0];
+    
+    UILocalNotification* localNotification = [[UILocalNotification alloc] init];
+    localNotification.fireDate = [calendar dateFromComponents:components];
+    localNotification.alertBody = @"Daily";
+    localNotification.alertAction = @"Daily";
+    localNotification.timeZone = [NSTimeZone systemTimeZone];
+    localNotification.applicationIconBadgeNumber = [[UIApplication sharedApplication] applicationIconBadgeNumber] + 1;
+    localNotification.repeatInterval= NSCalendarUnitMinute;
+    [[UIApplication sharedApplication] scheduleLocalNotification:localNotification];
+}
+
+-(void) monthlyNotification{
+    
+    NSDate *dateDailyReminder = [[SharedInterface fetchDateformatter:@"hh a"] dateFromString:self.txtDailyReminderTime.text];
+
+    NSDate *currentDate = [NSDate date];
+    NSCalendar * calendar = [NSCalendar currentCalendar];
+    [calendar setTimeZone:[NSTimeZone systemTimeZone]];
+    NSDateComponents* components = [calendar components:NSCalendarUnitMonth|NSCalendarUnitDay|NSCalendarUnitHour fromDate:currentDate];
+    NSDateComponents* componentsForDailyTime = [calendar components:NSCalendarUnitHour fromDate:dateDailyReminder];
+
+    [components setTimeZone:[NSTimeZone systemTimeZone]];
+    [components setHour:componentsForDailyTime.hour];
+    [components setMinute:0];
+    [components setSecond:0];
+    [components setDay:[self.txtMonthStartDate.text integerValue]];
+
+    UILocalNotification* localNotification = [[UILocalNotification alloc] init];
+    localNotification.fireDate = [calendar dateFromComponents:components];
+    localNotification.alertBody = @"Monthly";
+    localNotification.alertAction = @"Monthly";
+    localNotification.timeZone = [NSTimeZone systemTimeZone];
+    localNotification.applicationIconBadgeNumber = [[UIApplication sharedApplication] applicationIconBadgeNumber] + 1;
+    localNotification.repeatInterval= NSCalendarUnitMinute;
+    [[UIApplication sharedApplication] scheduleLocalNotification:localNotification];
+}
+
+#pragma mark - Picker Delegate -
+
+#pragma mark - Picker View Data source
+-(NSInteger)numberOfComponentsInPickerView:(UIPickerView *)pickerView{
+    return 1;
+}
+-(NSInteger)pickerView:(UIPickerView *)pickerView
+numberOfRowsInComponent:(NSInteger)component{
+    return [aryStartDayOfMonth count];
+}
+
+#pragma mark- Picker View Delegate
+
+-(void)pickerView:(UIPickerView *)pickerView didSelectRow:
+(NSInteger)row inComponent:(NSInteger)component{
+    [self.txtMonthStartDate setText:[aryStartDayOfMonth objectAtIndex:row]];
+}
+- (NSString *)pickerView:(UIPickerView *)pickerView titleForRow:
+(NSInteger)row forComponent:(NSInteger)component{
+    return [aryStartDayOfMonth objectAtIndex:row];
+}
 
 @end

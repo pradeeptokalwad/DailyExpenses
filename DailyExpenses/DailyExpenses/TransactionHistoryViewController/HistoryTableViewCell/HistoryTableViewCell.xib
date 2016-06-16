@@ -76,6 +76,9 @@
             <animations/>
             <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
             <connections>
+                <outlet property="lblExpenseAmount" destination="GNS-iG-xM0" id="FVC-gl-hQh"/>
+                <outlet property="lblExpenseDate" destination="T8K-52-oSP" id="AkV-T2-IS3"/>
+                <outlet property="lblExpenseTitle" destination="PFi-M9-qOC" id="ROi-VC-ZpS"/>
                 <outlet property="mainView" destination="Wz9-r5-mpi" id="iPP-lN-psY"/>
             </connections>
         </tableViewCell>

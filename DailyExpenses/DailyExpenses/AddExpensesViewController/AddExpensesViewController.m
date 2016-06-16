@@ -7,7 +7,8 @@
 //
 
 #import "AddExpensesViewController.h"
-
+#import "ExpenseModel.h"
+#import "SharedInterface.h"
 @interface AddExpensesViewController ()
 
 @end
@@ -17,6 +18,10 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     // Do any additional setup after loading the view.
+    
+    [[SharedInterface sharedInstance] addBorderColorToLayer:self.txtExpenseAmount];
+    [[SharedInterface sharedInstance] addBorderColorToLayer:self.txtExpenseTitle];
+    [[SharedInterface sharedInstance] addBorderColorToLayer:self.btnSubmit];
 }
 
 - (void)didReceiveMemoryWarning {
@@ -34,4 +39,26 @@
 }
 */
 
+- (IBAction)btnSubmitPressed:(id)sender {
+    
+    if([SharedInterface isStrEmpty:self.txtExpenseAmount.text] && [SharedInterface isStrEmpty:self.txtExpenseTitle.text]){
+        [SharedInterface displayPrompt:self message:@"Please enter expense title and amount"];
+    }else if([SharedInterface isStrEmpty:self.txtExpenseTitle.text]){
+        [SharedInterface displayPrompt:self message:@"Please enter expense title"];
+    }else if([SharedInterface isStrEmpty:self.txtExpenseAmount.text] ){
+        [SharedInterface displayPrompt:self message:@"Please enter expense amount"];
+    }else{
+        ExpenseModel *model = [[ExpenseModel alloc] init];
+        [model setExpenseAddedTime:[[SharedInterface fetchDateformatter:@"dd-MM-YYYY hh:mm:ss"] stringFromDate:[NSDate date]]];
+        [model setExpenseDate:[[SharedInterface fetchDateformatter:@"dd-MM-YYYY"] stringFromDate:self.datePicker.date]];
+        [model setExpenseAmount:self.txtExpenseAmount.text];
+        [model setExpenseTitle:self.txtExpenseTitle.text];
+        
+        if([[SharedInterface sharedInstance] addExpense:model]){
+            [SharedInterface displayPrompt:self message:@"Expense Added"];
+        }
+        model = nil;
+    }
+    
+}
 @end

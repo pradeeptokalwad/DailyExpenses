@@ -17,6 +17,8 @@
     float Width;
     
     UIButton *btnDelete;
+    
+    NSMutableArray *aryExpenseHistory;
 }
 @end
 
@@ -25,7 +27,7 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     
-    Width  = 100;
+   Width  = 100;
     
     self.view.backgroundColor = [UIColor colorWithRed:225.0f/255.0f green:226.0f/255.0f blue:228.0f/255.0f alpha:1.0];
     self.tableView.layer.cornerRadius = 2.50f;
@@ -41,12 +43,20 @@
     btnDelete.backgroundColor = [UIColor redColor];
     [btnDelete setTitle:@"Delete" forState:UIControlStateNormal];
     btnDelete.layer.borderColor = [[UIColor blackColor] CGColor];
+    [btnDelete addTarget:self action:@selector(btnDeletePressed:) forControlEvents:UIControlEventTouchUpInside];
     btnDelete.layer.borderWidth = 1.0f;
     btnDelete.clipsToBounds = YES;
     [self.tableView addSubview:btnDelete];
+    
     // Do any additional setup after loading the view, typically from a nib.
 }
 
+-(void)viewWillAppear:(BOOL)animated {
+    [super viewWillAppear:animated];
+    
+    aryExpenseHistory = [[NSMutableArray alloc] initWithArray:[[SharedInterface sharedInstance] fetchExpenseHistory]];
+    [self.tableView reloadData];
+}
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];
     // Dispose of any resources that can be recreated.
@@ -62,7 +72,7 @@
 
 -(NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section{
     
-    return 10;
+    return aryExpenseHistory.count;
 }
 
 -(UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath{
@@ -70,6 +80,7 @@
     cell.selectionStyle = UITableViewCellSelectionStyleNone;
     cell.backgroundColor = [UIColor clearColor];
     
+    [self configureCellWithExpenseData:[aryExpenseHistory objectAtIndex:indexPath.row] cell:cell];
     UISwipeGestureRecognizer *swipeRight = [[UISwipeGestureRecognizer alloc] initWithTarget:self action:@selector(swipeRightMethod:)];
     swipeRight.direction = UISwipeGestureRecognizerDirectionRight;
     [cell addGestureRecognizer:swipeRight];
@@ -83,6 +94,13 @@
     }
     
     return cell;
+}
+
+-(void) configureCellWithExpenseData:(ExpenseModel *)model cell:(HistoryTableViewCell *)cell {
+
+    cell.lblExpenseAmount.text = model.expenseAmount;
+    cell.lblExpenseDate.text = model.expenseDate;
+    cell.lblExpenseTitle.text = model.expenseTitle;
 }
 
 - (void)swipeLeftMethod:(UISwipeGestureRecognizer *)gesture {
@@ -211,6 +229,24 @@
             hasSwipedLeft = NO;
         }
     }];
+}
+
+-(void) btnDeletePressed:(id) sender {
+
+    [self resetSwipedCell];
+    
+    if([[SharedInterface sharedInstance] deleteExpense:[aryExpenseHistory objectAtIndex:swipeIndexPath.row]]) {
+        [SharedInterface displayPrompt:self message:@"Expense Deleted"];
+    }else {
+        [SharedInterface displayPrompt:self message:@"Unable to delete Expense"];
+    }
+    
+    [aryExpenseHistory removeAllObjects];
+    aryExpenseHistory = nil;
+    
+    aryExpenseHistory = [[NSMutableArray alloc] initWithArray:[[SharedInterface sharedInstance] fetchExpenseHistory]];
+    
+    [self.tableView reloadData];
 }
 
 @end
