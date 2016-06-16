@@ -71,11 +71,7 @@
 #pragma mark Open And Close database -
 
 /*
- 
- Method: openDatabase
- Description: This method open the database whenever we needed.
- Return Type: Return YES if successfully open otherwise return NO.
- 
+ * This method is used to This method open the database whenever we needed.
  */
 
 -(BOOL)openDatabase{
@@ -109,16 +105,18 @@
 }
 
 /*
- 
- Method: closeDatabase
- Description: This method is used to close the database whenever we needed.
- 
+ * This method is used to close the database.
  */
 
 -(void)closeDatabase{
     
     sqlite3_close(database);
 }
+
+
+/*
+ * This method is used to Add Expense in the database.
+ */
 
 -(BOOL)addExpense:(ExpenseModel *)model{
     
@@ -140,6 +138,10 @@
     
     return result;
 }
+
+/*
+ * This method is used to Delete expense from database.
+ */
 
 -(BOOL)deleteExpense:(ExpenseModel *)model{
     
@@ -163,6 +165,10 @@
     return result;
 }
 
+
+/*
+ * This method is used to Fetch complete history of expenses from database.
+ */
 
 -(NSArray *)fetchExpenseHistory{
     
@@ -190,6 +196,11 @@
     return [aryData copy];
 }
 
+
+/*
+ * This method is used to Fetch the date formatter as per given date format.
+ */
+
 +(NSDateFormatter *) fetchDateformatter:(NSString *)strFormat {
     
     static NSDateFormatter *formatter = nil;
@@ -199,6 +210,11 @@
     return formatter;
 }
 
+
+/*
+ * This method is used to Display prmopt on specifed viewcontroller.
+ */
+
 +(void) displayPrompt:(UIViewController *)controller message:(NSString *)message{
     
     UIAlertController *alertController = [UIAlertController alertControllerWithTitle:message message:nil preferredStyle:UIAlertControllerStyleAlert];
@@ -207,6 +223,73 @@
     [controller presentViewController:alertController animated:YES completion:nil];
 }
 
+/*
+ * This method is used to Display prmopt on specifed viewcontroller.
+ */
+
++(void) displayPromptWithTextfield:(UIViewController *)controller message:(NSString *)message{
+    
+    UIAlertController *alertController = [UIAlertController alertControllerWithTitle:message message:nil preferredStyle:UIAlertControllerStyleAlert];
+    [alertController addTextFieldWithConfigurationHandler:^(UITextField * _Nonnull textField) {
+        [[SharedInterface sharedInstance] addBorderColorToLayer:textField];
+    }];
+
+    UIAlertAction* ok = [UIAlertAction actionWithTitle:@"OK" style:UIAlertActionStyleDefault handler:^(UIAlertAction *action) {
+        UITextField *textField = alertController.textFields[0];
+        NSLog(@"text was %@", textField.text);
+        
+        [[NSUserDefaults standardUserDefaults] setValue:[NSString stringWithFormat:@"%ld",([[[NSUserDefaults standardUserDefaults] valueForKey:@"availablefund"] integerValue] + [textField.text integerValue])] forKey:@"availablefund"];
+        [[NSUserDefaults standardUserDefaults] synchronize];
+        
+        
+    }];
+    UIAlertAction* cancel = [UIAlertAction actionWithTitle:@"Cancel" style:UIAlertActionStyleDefault handler:nil];
+    [alertController addAction:cancel];
+    [alertController addAction:ok];
+    [controller presentViewController:alertController animated:YES completion:nil];
+
+}
+
++(void) displayPromptWithTextfield:(UIViewController *)controller message:(NSString *)message block:(completionBlock)block {
+    
+    UIAlertController *alertController = [UIAlertController alertControllerWithTitle:message message:nil preferredStyle:UIAlertControllerStyleAlert];
+    [alertController addTextFieldWithConfigurationHandler:^(UITextField * _Nonnull textField) {
+        [[SharedInterface sharedInstance] addBorderColorToLayer:textField];
+    }];
+    
+    UIAlertAction* ok = [UIAlertAction actionWithTitle:@"OK" style:UIAlertActionStyleDefault handler:^(UIAlertAction *action) {
+        UITextField *textField = alertController.textFields[0];
+        NSLog(@"text was %@", textField.text);
+        
+        [[NSUserDefaults standardUserDefaults] setValue:[NSString stringWithFormat:@"%ld",([[[NSUserDefaults standardUserDefaults] valueForKey:@"availablefund"] integerValue] + [textField.text integerValue])] forKey:@"availablefund"];
+        [[NSUserDefaults standardUserDefaults] synchronize];
+        
+        block(YES);
+        
+        
+    }];
+    UIAlertAction* cancel = [UIAlertAction actionWithTitle:@"Cancel" style:UIAlertActionStyleDefault handler:^(UIAlertAction * action) {
+        block(NO);
+    }];
+    [alertController addAction:cancel];
+    [alertController addAction:ok];
+    [controller presentViewController:alertController animated:YES completion:nil];
+}
+
++(void) displayPrompt:(UIViewController *)controller message:(NSString *)message block:(completionBlock)block {
+    
+    UIAlertController *alertController = [UIAlertController alertControllerWithTitle:message message:nil preferredStyle:UIAlertControllerStyleAlert];
+    UIAlertAction* ok = [UIAlertAction actionWithTitle:@"OK" style:UIAlertActionStyleDefault handler:^(UIAlertAction *action) {
+        block(YES);
+    }];
+    [alertController addAction:ok];
+    [controller presentViewController:alertController animated:YES completion:nil];
+}
+
+/*
+ * Add border color and width to UILabel, UIButton, UITextFields on various screens.
+ */
+
 -(void) addBorderColorToLayer:(id) componentToAddBorderColor {
     [[componentToAddBorderColor layer] setCornerRadius:2.0f];
     [[componentToAddBorderColor layer] setBorderColor:[[UIColor blackColor] CGColor]];
@@ -214,15 +297,29 @@
     [componentToAddBorderColor setClipsToBounds:YES];
 }
 
+
+/*
+ * Save Password from setup screen and settings screen.
+ */
+
 +(void) saveUserPassword:(NSString *)strPassword {
     [[NSUserDefaults standardUserDefaults] setValue:strPassword forKey:@"password"];
     [[NSUserDefaults standardUserDefaults] synchronize];
 }
 
+
+/*
+ * Returns the updated password.
+ */
+
 +(NSString *) fetchUserPassword {
     return [[NSUserDefaults standardUserDefaults] valueForKey:@"password"];
 }
 
+
+/*
+ * TO check wehter string is emoty or not..
+ */
 
 +(BOOL)isStrEmpty:(NSString *) str {
     

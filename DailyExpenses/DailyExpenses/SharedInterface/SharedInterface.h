@@ -11,6 +11,7 @@
 #import "ExpenseModel.h"
 #import <UIKit/UIKit.h>
 
+typedef void(^completionBlock)(BOOL finished);
 @interface SharedInterface : NSObject
 
 +(instancetype)sharedInstance;
@@ -20,6 +21,9 @@
 
 +(NSDateFormatter *) fetchDateformatter:(NSString *)strFormat;
 +(void) displayPrompt:(UIViewController *)controller message:(NSString *)message;
++(void) displayPrompt:(UIViewController *)controller message:(NSString *)message block:(completionBlock)block;
++(void) displayPromptWithTextfield:(UIViewController *)controller message:(NSString *)message;
++(void) displayPromptWithTextfield:(UIViewController *)controller message:(NSString *)message block:(completionBlock)block;
 -(BOOL)deleteExpense:(ExpenseModel *)model;
 -(void) addBorderColorToLayer:(id) componentToAddBorderColor;
 

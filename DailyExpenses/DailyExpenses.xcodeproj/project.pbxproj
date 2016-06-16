@@ -101,12 +101,9 @@
 			isa = PBXGroup;
 			children = (
 				27AB29851D11D052007C1F50 /* AppDelagate */,
-				27F47E601D13198E0032CA29 /* SetupPasswordViewController */,
-				27F47E591D1314A20032CA29 /* SharedInterface */,
-				27F47E531D1310470032CA29 /* ExpenseModel */,
+				27F47E611D1361FD0032CA29 /* Model */,
+				27AB29871D11D078007C1F50 /* View */,
 				27AB29861D11D06E007C1F50 /* Controllers */,
-				27AB29871D11D078007C1F50 /* Storyboard */,
-				27AB299A1D11DA66007C1F50 /* Utilities */,
 				2794D5C91D11BE8800B4A4FB /* Assets.xcassets */,
 				2794D5CB1D11BE8800B4A4FB /* LaunchScreen.storyboard */,
 				2794D5CE1D11BE8800B4A4FB /* Info.plist */,
@@ -139,19 +136,21 @@
 			children = (
 				2794D5C31D11BE8800B4A4FB /* ViewController.h */,
 				2794D5C41D11BE8800B4A4FB /* ViewController.m */,
+				27F47E601D13198E0032CA29 /* SetupPasswordViewController */,
 				27AB29881D11D099007C1F50 /* AddExpensesViewController */,
 				27AB298B1D11D099007C1F50 /* SettingsViewController */,
 				27AB298E1D11D099007C1F50 /* TransactionHistoryViewController */,
+				27AB299A1D11DA66007C1F50 /* Utilities */,
 			);
 			name = Controllers;
 			sourceTree = "<group>";
 		};
-		27AB29871D11D078007C1F50 /* Storyboard */ = {
+		27AB29871D11D078007C1F50 /* View */ = {
 			isa = PBXGroup;
 			children = (
 				2794D5C61D11BE8800B4A4FB /* Main.storyboard */,
 			);
-			name = Storyboard;
+			name = View;
 			sourceTree = "<group>";
 		};
 		27AB29881D11D099007C1F50 /* AddExpensesViewController */ = {
@@ -240,6 +239,15 @@
 				27F47E5E1D13198E0032CA29 /* SetupPasswordViewController.m */,
 			);
 			name = SetupPasswordViewController;
+			sourceTree = "<group>";
+		};
+		27F47E611D1361FD0032CA29 /* Model */ = {
+			isa = PBXGroup;
+			children = (
+				27F47E591D1314A20032CA29 /* SharedInterface */,
+				27F47E531D1310470032CA29 /* ExpenseModel */,
+			);
+			name = Model;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */

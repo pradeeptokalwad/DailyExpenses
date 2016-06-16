@@ -77,14 +77,20 @@
 
 }
 
+
+/*
+ * To Dismiss the Picker.
+ */
+
 -(void) btnDonePressed {
 
     [self.view endEditing:YES];
 }
 
--(void) dailyReminder {
-    self.txtDailyReminderTime.text = [[ SharedInterface fetchDateformatter:@"hh a"] stringFromDate:datePickerForDailyReminder.date];
-}
+
+/*
+ * Update the existing reminder date nad time, Available funds and user Password.
+ */
 
 - (IBAction)btnUpdateSettingsPressed:(id)sender {
     
@@ -120,6 +126,11 @@
     [[NSUserDefaults standardUserDefaults] synchronize];
 }
 
+
+/*
+ * Add daily notification .
+ */
+
 -(void) dailyNotification{
     
     NSDate *dateDailyReminder = [[SharedInterface fetchDateformatter:@"hh a"] dateFromString:self.txtDailyReminderTime.text];
@@ -144,8 +155,14 @@
     [[UIApplication sharedApplication] scheduleLocalNotification:localNotification];
 }
 
+
+/*
+ * add monthly notifications on selected date.
+ */
+
 -(void) monthlyNotification{
     
+
     NSDate *dateDailyReminder = [[SharedInterface fetchDateformatter:@"hh a"] dateFromString:self.txtDailyReminderTime.text];
 
     NSDate *currentDate = [NSDate date];

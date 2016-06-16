@@ -97,6 +97,10 @@
     return cell;
 }
 
+/*
+ * display data into cell.
+ */
+
 -(void) configureCellWithExpenseData:(ExpenseModel *)model cell:(HistoryTableViewCell *)cell {
 
 //    NSDate *date1 = [[SharedInterface fetchDateformatter:@"dd-MM-yyyy"] dateFromString:model.expenseDate];
@@ -110,6 +114,10 @@
     cell.lblExpenseDate.text = [[SharedInterface fetchDateformatter:@"dd MMM YYYY"] stringFromDate:[[SharedInterface fetchDateformatter:@"dd-MM-yyyy"] dateFromString:model.expenseDate]];
     cell.lblExpenseTitle.text = model.expenseTitle;
 }
+
+/*
+ * swipe gesture to delete the expense from datbase.
+ */
 
 - (void)swipeLeftMethod:(UISwipeGestureRecognizer *)gesture {
     
@@ -159,12 +167,9 @@
     
 }
 
-/******************************************
- Method name - swipeRightMethod
- Parameter   - UISwipeGestureRecognizer
- Return      - void
- Desc        - swipe Right Method
- ****************************************/
+/*
+ * swipe gesture to delete the expense from datbase.
+ */
 
 - (void)swipeRightMethod:(UISwipeGestureRecognizer *)gesture {
     
@@ -203,13 +208,9 @@
     }
 }
 
-
-/******************************************
- Method name - resetSwipedCell
- Parameter   - nil
- Return      - void
- Desc        - To Reset Cell of original Position/Origin
- ****************************************/
+/*
+ * Reset cell to original position.
+ */
 
 - (void)resetSwipedCell {
     
@@ -233,6 +234,10 @@
         }
     }];
 }
+
+/*
+ * Delete expense from datbase.
+ */
 
 -(void) btnDeletePressed:(id) sender {
 

@@ -31,16 +31,6 @@
     // Dispose of any resources that can be recreated.
 }
 
-/*
-#pragma mark - Navigation
-
-// In a storyboard-based application, you will often want to do a little preparation before navigation
-- (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
-    // Get the new view controller using [segue destinationViewController].
-    // Pass the selected object to the new view controller.
-}
-*/
-
 -(void)viewWillAppear:(BOOL)animated {
 
     [super viewWillAppear:animated];
@@ -51,6 +41,10 @@
     self.lblAvailableFunds.text = [NSString stringWithFormat:@"Available Funds: INR %@",[[NSUserDefaults standardUserDefaults] valueForKey:@"availablefund"]];
 
 }
+
+/*
+ * Add expense to the datbase.
+ */
 
 - (IBAction)btnSubmitPressed:(id)sender {
 

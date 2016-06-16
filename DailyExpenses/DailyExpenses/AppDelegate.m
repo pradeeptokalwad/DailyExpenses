@@ -7,7 +7,7 @@
 //
 
 #import "AppDelegate.h"
-
+#import "ViewController.h"
 @interface AppDelegate ()
 
 @end
@@ -21,7 +21,9 @@
     UIUserNotificationType types = UIUserNotificationTypeBadge | UIUserNotificationTypeAlert;
     UIUserNotificationSettings *notificationSettings = [UIUserNotificationSettings settingsForTypes:types categories:nil];
     [[UIApplication sharedApplication] registerUserNotificationSettings:notificationSettings];
-//    
+    
+
+//
 //    if(![SharedInterface isStrEmpty:[SharedInterface fetchUserPassword]]){
 //        UIStoryboard *storyboard = [UIStoryboard storyboardWithName:@"Main" bundle:[NSBundle mainBundle]];
 //        self.window.rootViewController = [storyboard instantiateViewControllerWithIdentifier:@"ViewController"];
@@ -56,7 +58,26 @@
 {
     UIApplicationState state = [application applicationState];
     if (state == UIApplicationStateActive) {
-        [SharedInterface displayPrompt:self.window.rootViewController message:[NSString stringWithFormat:@"Local notification received %@",notification.alertBody]];
+        
+        if([[notification.alertBody lowercaseString] isEqualToString:@"monthly"]) {
+                [SharedInterface displayPromptWithTextfield:self.window.rootViewController message:[NSString stringWithFormat:@"Hello XXX, This is Start of Month, Please add funds for the current month.Last Month balance is INR %.2f",[[[NSUserDefaults standardUserDefaults] valueForKey:@"availablefund"] floatValue]] block:^(BOOL finished) {
+                    if(finished){
+                    
+                        dispatch_async(dispatch_get_main_queue(), ^{
+                            UIStoryboard *storyboard = [UIStoryboard storyboardWithName:@"Main" bundle:[NSBundle mainBundle]];
+                            [(ViewController *)[storyboard instantiateViewControllerWithIdentifier:@"ViewController"] setSelectedIndex:0];
+
+                        });
+                    }
+                }];
+        }else if([[notification.alertBody lowercaseString] isEqualToString:@"daily"]){
+            [SharedInterface displayPrompt:self.window.rootViewController message:[NSString stringWithFormat:@"Hello XXX, Please add Todays Expenses"] block:^(BOOL finished) {
+                dispatch_async(dispatch_get_main_queue(), ^{
+                    UIStoryboard *storyboard = [UIStoryboard storyboardWithName:@"Main" bundle:[NSBundle mainBundle]];
+                    [(ViewController *)[storyboard instantiateViewControllerWithIdentifier:@"ViewController"] setSelectedIndex:0];
+                });
+            }];
+        }
     }
 }
 
