@@ -21,11 +21,11 @@
     UIUserNotificationType types = UIUserNotificationTypeBadge | UIUserNotificationTypeAlert;
     UIUserNotificationSettings *notificationSettings = [UIUserNotificationSettings settingsForTypes:types categories:nil];
     [[UIApplication sharedApplication] registerUserNotificationSettings:notificationSettings];
-    
-    if(![SharedInterface isStrEmpty:[SharedInterface fetchUserPassword]]){
-        UIStoryboard *storyboard = [UIStoryboard storyboardWithName:@"Main" bundle:[NSBundle mainBundle]];
-        self.window.rootViewController = [storyboard instantiateViewControllerWithIdentifier:@"ViewController"];
-    }
+//    
+//    if(![SharedInterface isStrEmpty:[SharedInterface fetchUserPassword]]){
+//        UIStoryboard *storyboard = [UIStoryboard storyboardWithName:@"Main" bundle:[NSBundle mainBundle]];
+//        self.window.rootViewController = [storyboard instantiateViewControllerWithIdentifier:@"ViewController"];
+//    }
 
     return YES;
 }

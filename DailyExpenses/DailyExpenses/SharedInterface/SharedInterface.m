@@ -60,17 +60,6 @@
     }
 }
 
-/*
- 
- Method: getDBPath
- Description: Search for standard documents using NSSearchPathForDirectoriesInDomains
- Parameters:
- First Param = Searching the documents directory
- Second Param = Searching the Users directory and not the System
- Expand any tildes and identify home directories.
- Return Type: string value and restures the path for Given databse.
- */
-
 -(NSString *) getDBPath {
     
     NSArray *paths = NSSearchPathForDirectoriesInDomains(NSDocumentDirectory , NSUserDomainMask, YES);
@@ -188,7 +177,6 @@
     {
         while(sqlite3_step(stmt) == SQLITE_ROW)
         {
-            
             ExpenseModel *model = [[ExpenseModel alloc] init];
             [model setExpenseDate:[NSString stringWithUTF8String:(const char *)sqlite3_column_text(stmt, 0)]];
             [model setExpenseTitle:[NSString stringWithUTF8String:(const char *)sqlite3_column_text(stmt, 1)]];
@@ -220,12 +208,10 @@
 }
 
 -(void) addBorderColorToLayer:(id) componentToAddBorderColor {
-
     [[componentToAddBorderColor layer] setCornerRadius:2.0f];
     [[componentToAddBorderColor layer] setBorderColor:[[UIColor blackColor] CGColor]];
     [[componentToAddBorderColor layer] setBorderWidth:0.5f];
     [componentToAddBorderColor setClipsToBounds:YES];
-    
 }
 
 +(void) saveUserPassword:(NSString *)strPassword {

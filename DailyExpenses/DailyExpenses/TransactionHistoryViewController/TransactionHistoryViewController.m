@@ -28,7 +28,8 @@
     [super viewDidLoad];
     
    Width  = 100;
-    
+    self.title = @"Transaction History";
+
     self.view.backgroundColor = [UIColor colorWithRed:225.0f/255.0f green:226.0f/255.0f blue:228.0f/255.0f alpha:1.0];
     self.tableView.layer.cornerRadius = 2.50f;
     self.tableView.layer.borderColor = [[UIColor lightGrayColor] CGColor];
@@ -98,8 +99,15 @@
 
 -(void) configureCellWithExpenseData:(ExpenseModel *)model cell:(HistoryTableViewCell *)cell {
 
-    cell.lblExpenseAmount.text = model.expenseAmount;
-    cell.lblExpenseDate.text = model.expenseDate;
+//    NSDate *date1 = [[SharedInterface fetchDateformatter:@"dd-MM-yyyy"] dateFromString:model.expenseDate];
+    
+//    NSDateFormatter *formatter = nil;
+//    if(!formatter)
+//        formatter = [[NSDateFormatter alloc] init];
+//    [formatter setDateFormat:@"dd MMM YYYY"];
+    
+    cell.lblExpenseAmount.text = [NSString stringWithFormat:@"INR %.2f",[model.expenseAmount floatValue]];
+    cell.lblExpenseDate.text = [[SharedInterface fetchDateformatter:@"dd MMM YYYY"] stringFromDate:[[SharedInterface fetchDateformatter:@"dd-MM-yyyy"] dateFromString:model.expenseDate]];
     cell.lblExpenseTitle.text = model.expenseTitle;
 }
 
@@ -120,9 +128,7 @@
     frmBtnDelete.size.width = Width;
     
     btnDelete.frame = frmBtnDelete;
-    CGPoint location = [gesture locationInView:self.tableView];
-    NSIndexPath *indexPath = [self.tableView indexPathForRowAtPoint:location];
-    swipeIndexPath=indexPath;
+    swipeIndexPath=[self.tableView indexPathForCell:swipedCell];
     
     if(!hasSwipedLeft)
     {
@@ -170,22 +176,19 @@
         return;
     }
     
-    
-    CGPoint location = [gesture locationInView:self.tableView];
-    NSIndexPath *indexPath = [self.tableView indexPathForRowAtPoint:location];
-    swipeIndexPath=indexPath;
+    swipedCell = (HistoryTableViewCell *)gesture.view;
+
+    swipeIndexPath=[self.tableView indexPathForCell:swipedCell];
     
     CGRect frmBtnDelete = btnDelete.frame;
     frmBtnDelete.size.height = swipedCell.mainView.frame.size.height;
     frmBtnDelete.size.width = Width;
-    swipedCell = (HistoryTableViewCell *)gesture.view;
     frmBtnDelete.origin.y = swipedCell.mainView.frame.origin.y;
     btnDelete.frame = frmBtnDelete;
     
     
-    swipeIndexPath=indexPath;
     
-    if(hasSwipedLeft && [indexPath isEqual:swipeIndexPath])
+    if(hasSwipedLeft && swipeIndexPath)
     {
         [UIView animateWithDuration:0.3 animations:^{
             
@@ -233,7 +236,6 @@
 
 -(void) btnDeletePressed:(id) sender {
 
-    [self resetSwipedCell];
     
     if([[SharedInterface sharedInstance] deleteExpense:[aryExpenseHistory objectAtIndex:swipeIndexPath.row]]) {
         [SharedInterface displayPrompt:self message:@"Expense Deleted"];
@@ -245,7 +247,8 @@
     aryExpenseHistory = nil;
     
     aryExpenseHistory = [[NSMutableArray alloc] initWithArray:[[SharedInterface sharedInstance] fetchExpenseHistory]];
-    
+    [self resetSwipedCell];
+
     [self.tableView reloadData];
 }
 

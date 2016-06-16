@@ -53,6 +53,7 @@
     [[SharedInterface sharedInstance] addBorderColorToLayer:self.txtNewPassword];
     [[SharedInterface sharedInstance] addBorderColorToLayer:self.txtOldPassword];
     [[SharedInterface sharedInstance] addBorderColorToLayer:self.btnUpdate];
+    self.title = @"Settings";
 
     // Do any additional setup after loading the view.
 }
@@ -60,6 +61,20 @@
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];
     // Dispose of any resources that can be recreated.
+}
+
+-(void)viewWillAppear:(BOOL)animated {
+
+    
+    self.txtAvailableFund.text = @"0.00";
+    
+    if(![SharedInterface isStrEmpty:[[NSUserDefaults standardUserDefaults] valueForKey:@"monthstartdate"]])
+        self.txtMonthStartDate.text = [[NSUserDefaults standardUserDefaults] valueForKey:@"monthstartdate"];
+    if(![SharedInterface isStrEmpty:[[NSUserDefaults standardUserDefaults] valueForKey:@"dailyreminderdate"]])
+        self.txtDailyReminderTime.text = [[NSUserDefaults standardUserDefaults] valueForKey:@"dailyreminderdate"];
+    if(![SharedInterface isStrEmpty:[[NSUserDefaults standardUserDefaults] valueForKey:@"availablefund"]])
+        self.txtAvailableFund.text = [NSString stringWithFormat:@"%.2f",[[[NSUserDefaults standardUserDefaults] valueForKey:@"availablefund"] floatValue]];
+
 }
 
 -(void) btnDonePressed {
@@ -77,6 +92,32 @@
     
     [self dailyNotification];
     [self monthlyNotification];
+    
+    if(!([SharedInterface isStrEmpty:self.txtOldPassword.text]) && [SharedInterface isStrEmpty:self.txtNewPassword.text]){
+        [SharedInterface displayPrompt:self message:@"Please enter new Password"];
+    }else if((![SharedInterface isStrEmpty:self.txtOldPassword.text]) && ![SharedInterface isStrEmpty:self.txtNewPassword.text]) {
+    
+        if([self.txtOldPassword.text isEqualToString:[SharedInterface fetchUserPassword]]){
+            [SharedInterface saveUserPassword:self.txtNewPassword.text];
+            [SharedInterface displayPrompt:self message:@"Password Updated Successfully"];
+
+        }else{
+            [SharedInterface displayPrompt:self message:@"Old Passowrd doesn't match"];
+        }
+    }else {
+    
+        [SharedInterface displayPrompt:self message:@"Settings Updated Successfully"];
+
+    }
+    
+    if(![SharedInterface isStrEmpty:self.txtMonthStartDate.text])
+        [[NSUserDefaults standardUserDefaults] setValue:self.txtMonthStartDate.text forKey:@"monthstartdate"];
+    if(![SharedInterface isStrEmpty:self.txtDailyReminderTime.text])
+        [[NSUserDefaults standardUserDefaults] setValue:self.txtDailyReminderTime.text forKey:@"dailyreminderdate"];
+    if(![SharedInterface isStrEmpty:self.txtAvailableFund.text])
+        [[NSUserDefaults standardUserDefaults] setValue:self.txtAvailableFund.text forKey:@"availablefund"];
+    
+    [[NSUserDefaults standardUserDefaults] synchronize];
 }
 
 -(void) dailyNotification{
@@ -99,7 +140,7 @@
     localNotification.alertAction = @"Daily";
     localNotification.timeZone = [NSTimeZone systemTimeZone];
     localNotification.applicationIconBadgeNumber = [[UIApplication sharedApplication] applicationIconBadgeNumber] + 1;
-    localNotification.repeatInterval= NSCalendarUnitMinute;
+    localNotification.repeatInterval= NSCalendarUnitDay;
     [[UIApplication sharedApplication] scheduleLocalNotification:localNotification];
 }
 
@@ -125,7 +166,7 @@
     localNotification.alertAction = @"Monthly";
     localNotification.timeZone = [NSTimeZone systemTimeZone];
     localNotification.applicationIconBadgeNumber = [[UIApplication sharedApplication] applicationIconBadgeNumber] + 1;
-    localNotification.repeatInterval= NSCalendarUnitMinute;
+    localNotification.repeatInterval= NSCalendarUnitMonth;
     [[UIApplication sharedApplication] scheduleLocalNotification:localNotification];
 }
 

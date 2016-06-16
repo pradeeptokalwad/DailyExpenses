@@ -29,7 +29,7 @@
                                 <nil key="highlightedColor"/>
                             </label>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Transaction Title" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="PFi-M9-qOC">
-                                <rect key="frame" x="10" y="25" width="164" height="21"/>
+                                <rect key="frame" x="10" y="25" width="143" height="21"/>
                                 <animations/>
                                 <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="17"/>
@@ -37,12 +37,12 @@
                                 <nil key="highlightedColor"/>
                             </label>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="INR 300.00" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="GNS-iG-xM0">
-                                <rect key="frame" x="179" y="25" width="111" height="21"/>
+                                <rect key="frame" x="161" y="25" width="139" height="21"/>
                                 <animations/>
                                 <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="21" id="MV0-8p-P9q"/>
-                                    <constraint firstAttribute="width" constant="111" id="UOj-J1-vaj"/>
+                                    <constraint firstAttribute="width" constant="139" id="UOj-J1-vaj"/>
                                 </constraints>
                                 <fontDescription key="fontDescription" type="boldSystem" pointSize="17"/>
                                 <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
@@ -54,10 +54,10 @@
                         <constraints>
                             <constraint firstItem="T8K-52-oSP" firstAttribute="leading" secondItem="Wz9-r5-mpi" secondAttribute="leading" constant="10" id="6Vd-7h-llJ"/>
                             <constraint firstItem="PFi-M9-qOC" firstAttribute="top" secondItem="T8K-52-oSP" secondAttribute="bottom" constant="1" id="LaN-5C-wm7"/>
-                            <constraint firstAttribute="trailing" secondItem="GNS-iG-xM0" secondAttribute="trailing" constant="10" id="OFH-Bl-Kh0"/>
+                            <constraint firstAttribute="trailing" secondItem="GNS-iG-xM0" secondAttribute="trailing" id="OFH-Bl-Kh0"/>
                             <constraint firstAttribute="bottom" secondItem="PFi-M9-qOC" secondAttribute="bottom" constant="24" id="Zjy-PJ-ren"/>
                             <constraint firstAttribute="bottom" secondItem="GNS-iG-xM0" secondAttribute="bottom" constant="24" id="Zyr-m2-fl5"/>
-                            <constraint firstItem="GNS-iG-xM0" firstAttribute="leading" secondItem="PFi-M9-qOC" secondAttribute="trailing" constant="5" id="a4K-ZJ-JmF"/>
+                            <constraint firstItem="GNS-iG-xM0" firstAttribute="leading" secondItem="PFi-M9-qOC" secondAttribute="trailing" constant="8" id="a4K-ZJ-JmF"/>
                             <constraint firstItem="PFi-M9-qOC" firstAttribute="leading" secondItem="Wz9-r5-mpi" secondAttribute="leading" constant="10" id="a9P-b0-rDO"/>
                             <constraint firstItem="T8K-52-oSP" firstAttribute="top" secondItem="Wz9-r5-mpi" secondAttribute="top" constant="3" id="dRb-Ph-32A"/>
                             <constraint firstItem="GNS-iG-xM0" firstAttribute="top" secondItem="T8K-52-oSP" secondAttribute="bottom" constant="1" id="e2p-mj-HiZ"/>
